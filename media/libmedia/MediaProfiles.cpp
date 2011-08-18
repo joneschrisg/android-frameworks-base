@@ -59,6 +59,7 @@ const MediaProfiles::NameToTagMap MediaProfiles::sAudioDecoderNameMap[] = {
 };
 
 const MediaProfiles::NameToTagMap MediaProfiles::sCamcorderQualityNameMap[] = {
+    {"hd", CAMCORDER_QUALITY_HD},
     {"high", CAMCORDER_QUALITY_HIGH},
     {"low",  CAMCORDER_QUALITY_LOW}
 };
