@@ -1444,6 +1444,11 @@ public class WifiStateTracker extends NetworkStateTracker {
         NetworkUtils.resetConnections(mInterfaceName);
 
         // Stop DHCP
+        if (mDhcpTarget == null) {
+          Log.e(TAG, "DhcpTarget is null");
+          return;
+        }
+
         mDhcpTarget.setCancelCallback(true);
         mDhcpTarget.removeMessages(EVENT_DHCP_START);
 
