@@ -771,6 +771,11 @@ bool AudioSystem::isBluetoothScoDevice(audio_devices device)
     }
 }
 
+bool AudioSystem::isSeperatedStream(stream_type stream)
+{
+    return true;
+}
+
 bool AudioSystem::isLowVisibility(stream_type stream)
 {
     if (stream == AudioSystem::SYSTEM ||
