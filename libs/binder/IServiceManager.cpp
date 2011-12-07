@@ -66,58 +66,65 @@ bool checkCallingPermission(const String16& permission, int32_t* outPid, int32_t
 
 bool checkPermission(const String16& permission, pid_t pid, uid_t uid)
 {
-    sp<IPermissionController> pc;
-    gDefaultServiceManagerLock.lock();
-    pc = gPermissionController;
-    gDefaultServiceManagerLock.unlock();
-    
-    int64_t startTime = 0;
+	// Commented out permissions since that exists in the java layer
+	// we have turned off. Put out log message so we know what to fill
+	// in later.
+	LOGI("(B2G) Returning fake true permission: %s from uid=%d pid=%d",
+		 String8(permission).string(), uid, pid);
+	return true;
 
-    while (true) {
-        if (pc != NULL) {
-            bool res = pc->checkPermission(permission, pid, uid);
-            if (res) {
-                if (startTime != 0) {
-                    LOGI("Check passed after %d seconds for %s from uid=%d pid=%d",
-                            (int)((uptimeMillis()-startTime)/1000),
-                            String8(permission).string(), uid, pid);
-                }
-                return res;
-            }
-            
-            // Is this a permission failure, or did the controller go away?
-            if (pc->asBinder()->isBinderAlive()) {
-                LOGW("Permission failure: %s from uid=%d pid=%d",
-                        String8(permission).string(), uid, pid);
-                return false;
-            }
-            
-            // Object is dead!
-            gDefaultServiceManagerLock.lock();
-            if (gPermissionController == pc) {
-                gPermissionController = NULL;
-            }
-            gDefaultServiceManagerLock.unlock();
-        }
+    // sp<IPermissionController> pc;
+    // gDefaultServiceManagerLock.lock();
+    // pc = gPermissionController;
+    // gDefaultServiceManagerLock.unlock();
     
-        // Need to retrieve the permission controller.
-        sp<IBinder> binder = defaultServiceManager()->checkService(_permission);
-        if (binder == NULL) {
-            // Wait for the permission controller to come back...
-            if (startTime == 0) {
-                startTime = uptimeMillis();
-                LOGI("Waiting to check permission %s from uid=%d pid=%d",
-                        String8(permission).string(), uid, pid);
-            }
-            sleep(1);
-        } else {
-            pc = interface_cast<IPermissionController>(binder);
-            // Install the new permission controller, and try again.        
-            gDefaultServiceManagerLock.lock();
-            gPermissionController = pc;
-            gDefaultServiceManagerLock.unlock();
-        }
-    }
+    // int64_t startTime = 0;
+
+    // while (true) {
+    //     if (pc != NULL) {
+    //         bool res = pc->checkPermission(permission, pid, uid);
+    //         if (res) {
+    //             if (startTime != 0) {
+    //                 LOGI("Check passed after %d seconds for %s from uid=%d pid=%d",
+    //                         (int)((uptimeMillis()-startTime)/1000),
+    //                         String8(permission).string(), uid, pid);
+    //             }
+    //             return res;
+    //         }
+            
+    //         // Is this a permission failure, or did the controller go away?
+    //         if (pc->asBinder()->isBinderAlive()) {
+    //             LOGW("Permission failure: %s from uid=%d pid=%d",
+    //                     String8(permission).string(), uid, pid);
+    //             return false;
+    //         }
+            
+    //         // Object is dead!
+    //         gDefaultServiceManagerLock.lock();
+    //         if (gPermissionController == pc) {
+    //             gPermissionController = NULL;
+    //         }
+    //         gDefaultServiceManagerLock.unlock();
+    //     }
+    
+    //     // Need to retrieve the permission controller.
+    //     sp<IBinder> binder = defaultServiceManager()->checkService(_permission);
+    //     if (binder == NULL) {
+    //         // Wait for the permission controller to come back...
+    //         if (startTime == 0) {
+    //             startTime = uptimeMillis();
+    //             LOGI("Waiting to check permission %s from uid=%d pid=%d",
+    //                     String8(permission).string(), uid, pid);
+    //         }
+    //         sleep(1);
+    //     } else {
+    //         pc = interface_cast<IPermissionController>(binder);
+    //         // Install the new permission controller, and try again.        
+    //         gDefaultServiceManagerLock.lock();
+    //         gPermissionController = pc;
+    //         gDefaultServiceManagerLock.unlock();
+    //     }
+    // }
 }
 
 // ----------------------------------------------------------------------
