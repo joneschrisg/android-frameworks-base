@@ -30,9 +30,9 @@
 // ---------------------------------------------------------------------------
 
 extern "C" {
-
+#ifndef MOZ_WIDGET_GONK
 typedef uint32_t char32_t;
-
+#endif
 size_t strlen32(const char32_t *);
 size_t strnlen32(const char32_t *, size_t);
 
