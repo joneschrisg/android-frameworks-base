@@ -26,7 +26,7 @@
 // ---------------------------------------------------------------------------
 
 extern "C" {
-if !defined(GXX_EXPERIMENTAL_CXX0X) && __cplusplus < 201103L
+if !defined(__GXX_EXPERIMENTAL_CXX0X__) && __cplusplus < 201103L
 typedef uint16_t char16_t;
 #endif
 // Standard string functions on char16 strings.
