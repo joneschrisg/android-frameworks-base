@@ -30,9 +30,9 @@
 // ---------------------------------------------------------------------------
 
 extern "C" {
-
+if !defined(__GXX_EXPERIMENTAL_CXX0X__) && __cplusplus < 201103L
 typedef uint32_t char32_t;
-
+#endif
 size_t strlen32(const char32_t *);
 size_t strnlen32(const char32_t *, size_t);
 
