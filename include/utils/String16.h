@@ -26,9 +26,9 @@
 // ---------------------------------------------------------------------------
 
 extern "C" {
-
+if !defined(__GXX_EXPERIMENTAL_CXX0X__) && __cplusplus < 201103L
 typedef uint16_t char16_t;
-
+#endif
 // Standard string functions on char16 strings.
 int strcmp16(const char16_t *, const char16_t *);
 int strncmp16(const char16_t *s1, const char16_t *s2, size_t n);
