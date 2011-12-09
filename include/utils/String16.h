@@ -26,7 +26,7 @@
 // ---------------------------------------------------------------------------
 
 extern "C" {
-#ifndef MOZ_WIDGET_GONK
+#ifndef __GXX_EXPERIMENTAL_CXX0X__
 typedef uint16_t char16_t;
 #endif
 // Standard string functions on char16 strings.

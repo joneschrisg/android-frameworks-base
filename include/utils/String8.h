@@ -30,7 +30,7 @@
 // ---------------------------------------------------------------------------
 
 extern "C" {
-#ifndef MOZ_WIDGET_GONK
+#ifndef __GXX_EXPERIMENTAL_CXX0X__
 typedef uint32_t char32_t;
 #endif
 size_t strlen32(const char32_t *);
