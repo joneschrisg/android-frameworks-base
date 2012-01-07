@@ -38,7 +38,7 @@ namespace android {
 
 GraphicBuffer::GraphicBuffer()
     : BASE(), mOwner(ownData), mBufferMapper(GraphicBufferMapper::get()),
-      mInitCheck(NO_ERROR), mIndex(-1)
+      mInitCheck(NO_ERROR), mVStride(0), mIndex(-1)
 {
     width  = 
     height = 
@@ -52,7 +52,7 @@ GraphicBuffer::GraphicBuffer()
 GraphicBuffer::GraphicBuffer(uint32_t w, uint32_t h, 
         PixelFormat reqFormat, uint32_t reqUsage)
     : BASE(), mOwner(ownData), mBufferMapper(GraphicBufferMapper::get()),
-      mInitCheck(NO_ERROR), mIndex(-1)
+      mInitCheck(NO_ERROR), mVStride(0), mIndex(-1)
 {
     width  = 
     height = 
@@ -69,7 +69,7 @@ GraphicBuffer::GraphicBuffer(uint32_t w, uint32_t h,
         uint32_t inStride, native_handle_t* inHandle, bool keepOwnership)
     : BASE(), mOwner(keepOwnership ? ownHandle : ownNone),
       mBufferMapper(GraphicBufferMapper::get()),
-      mInitCheck(NO_ERROR), mIndex(-1)
+      mInitCheck(NO_ERROR), mVStride(0), mIndex(-1)
 {
     width  = w;
     height = h;
@@ -140,6 +140,7 @@ status_t GraphicBuffer::initSize(uint32_t w, uint32_t h, PixelFormat format,
         this->height = h;
         this->format = format;
         this->usage  = reqUsage;
+        mVStride = 0;
     }
     return err;
 }
@@ -180,6 +181,7 @@ status_t GraphicBuffer::lock(GGLSurface* sur, uint32_t usage)
         sur->height = height;
         sur->stride = stride;
         sur->format = format;
+        sur->vstride = mVStride;
         sur->data = static_cast<GGLubyte*>(vaddr);
     }
     return res;
@@ -276,6 +278,16 @@ void GraphicBuffer::setIndex(int index) {
 int GraphicBuffer::getIndex() const {
     return mIndex;
 }
+
+
+void GraphicBuffer::setVerticalStride(uint32_t vstride) {
+        mVStride = vstride;
+}
+
+uint32_t GraphicBuffer::getVerticalStride() const {
+        return mVStride;
+}
+
 
 // ---------------------------------------------------------------------------
 
