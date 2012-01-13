@@ -92,6 +92,8 @@ public:
     /* set the buffer attributes */
     status_t setParameter(int param, int value);
 
+    status_t setFd(int fd);
+
     /* returns the address of a given buffer if supported, NULL otherwise. */
     void* getBufferAddress(overlay_buffer_t buffer);
 

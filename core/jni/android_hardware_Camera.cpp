@@ -313,7 +313,11 @@ static void android_hardware_Camera_getCameraInfo(JNIEnv *env, jobject thiz,
 static void android_hardware_Camera_native_setup(JNIEnv *env, jobject thiz,
     jobject weak_this, jint cameraId)
 {
+#ifdef DISABLE_CAMERA_CONNECT
+    sp<Camera> camera = 0;
+#else
     sp<Camera> camera = Camera::connect(cameraId);
+#endif
 
     if (camera == NULL) {
         jniThrowException(env, "java/lang/RuntimeException",

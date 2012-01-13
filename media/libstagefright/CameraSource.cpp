@@ -101,6 +101,9 @@ static int32_t getColorFormat(const char* colorFormat) {
 
 // static
 CameraSource *CameraSource::Create() {
+#ifdef DISABLE_CAMERA_CONNECT
+    return NULL;
+#else
     sp<Camera> camera = Camera::connect(0);
 
     if (camera.get() == NULL) {
@@ -108,6 +111,7 @@ CameraSource *CameraSource::Create() {
     }
 
     return new CameraSource(camera);
+#endif
 }
 
 // static

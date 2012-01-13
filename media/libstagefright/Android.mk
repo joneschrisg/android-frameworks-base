@@ -3,6 +3,10 @@ include $(CLEAR_VARS)
 
 include frameworks/base/media/libstagefright/codecs/common/Config.mk
 
+ifeq ($(TARGET_LIBCAMERA_BLOB_SYM_MISMATCH),true)
+   LOCAL_CFLAGS += -DDISABLE_CAMERA_CONNECT
+endif
+
 LOCAL_SRC_FILES:=                         \
         AMRExtractor.cpp                  \
         AMRWriter.cpp                     \

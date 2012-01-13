@@ -409,6 +409,7 @@ public:
     static bool isInputChannel(uint32_t channel);
     static bool isValidFormat(uint32_t format);
     static bool isLinearPCM(uint32_t format);
+    static bool isModeInCall();
 
 private:
 

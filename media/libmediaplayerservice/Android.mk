@@ -6,6 +6,10 @@ LOCAL_PATH:= $(call my-dir)
 
 include $(CLEAR_VARS)
 
+ifeq ($(TARGET_LIBCAMERA_BLOB_SYM_MISMATCH),true)
+   LOCAL_CFLAGS += -DDISABLE_CAMERA_CONNECT
+endif
+
 LOCAL_SRC_FILES:=               \
     MediaRecorderClient.cpp     \
     MediaPlayerService.cpp      \

@@ -932,7 +932,9 @@ status_t StagefrightRecorder::setupCameraSource() {
 
     int64_t token = IPCThreadState::self()->clearCallingIdentity();
     if (mCamera == 0) {
+#ifndef DISABLE_CAMERA_CONNECT
         mCamera = Camera::connect(mCameraId);
+#endif
         if (mCamera == 0) {
             LOGE("Camera connection could not be established.");
             return -EBUSY;

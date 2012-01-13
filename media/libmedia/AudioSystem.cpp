@@ -169,6 +169,14 @@ status_t AudioSystem::setMode(int mode)
     return af->setMode(mode);
 }
 
+bool AudioSystem::isModeInCall()
+{
+//    if (gPhoneState == AudioSystem::MODE_IN_CALL) {
+//        return true;
+//    }
+
+    return false;
+}
 
 status_t AudioSystem::isStreamActive(int stream, bool* state) {
     const sp<IAudioFlinger>& af = AudioSystem::get_audio_flinger();
