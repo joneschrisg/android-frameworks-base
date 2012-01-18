@@ -10,6 +10,9 @@ ifeq ($(AUDIO_POLICY_TEST),true)
   ENABLE_AUDIO_DUMP := true
 endif
 
+ifeq ($(TARGET_AUDIO_INTERFACE_NEWER_VTABLE),true)
+  LOCAL_CFLAGS += -DENABLE_NEWER_AUDIO_INTERFACE_VTABLE
+endif
 
 LOCAL_SRC_FILES:= \
     AudioHardwareGeneric.cpp \
