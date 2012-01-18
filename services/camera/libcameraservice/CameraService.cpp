@@ -145,7 +145,9 @@ sp<ICamera> CameraService::connect(
         return NULL;
     }
 
-    sp<CameraHardwareInterface> hardware = HAL_openCameraHardware(cameraId);
+    // TODO(mvines): Hardcode camera mode to '1' (2D) until B2G moves up to a newer
+    //               Android baseline
+    sp<CameraHardwareInterface> hardware = HAL_openCameraHardware(cameraId, 1);
     if (hardware == NULL) {
         LOGE("Fail to open camera hardware (id=%d)", cameraId);
         return NULL;

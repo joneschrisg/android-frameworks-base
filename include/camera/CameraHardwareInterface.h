@@ -127,6 +127,18 @@ public:
     virtual status_t    startPreview() = 0;
 
     /**
+     * Query the recording buffer information from HAL.
+     * This is needed because the opencore expects the buffer
+     * information before starting the recording.
+     */
+    virtual status_t    getBufferInfo(sp<IMemory>& Frame, size_t *alignedSize) = 0;
+
+    /**
+     * Encode the YUV data.
+     */
+    virtual void        encodeData() = 0;
+
+    /**
      * Only used if overlays are used for camera preview.
      */
     virtual bool         useOverlay() {return false;}
@@ -213,6 +225,12 @@ public:
      * Dump state of the camera hardware
      */
     virtual status_t dump(int fd, const Vector<String16>& args) const = 0;
+
+    /**
+    * Take a LiveSnapshot - Picture while recording
+    */
+    virtual status_t    takeLiveSnapshot() = 0;
+
 };
 
 /**
@@ -224,7 +242,9 @@ public:
 extern "C" int HAL_getNumberOfCameras();
 extern "C" void HAL_getCameraInfo(int cameraId, struct CameraInfo* cameraInfo);
 /* HAL should return NULL if it fails to open camera hardware. */
-extern "C" sp<CameraHardwareInterface> HAL_openCameraHardware(int cameraId);
+extern "C" sp<CameraHardwareInterface> HAL_openCameraHardware(int cameraId, int mode);
+/* Returns whether the camera is in 3D mode or not */
+extern "C" int HAL_isIn3DMode();
 
 };  // namespace android
 
