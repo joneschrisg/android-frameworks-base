@@ -126,6 +126,7 @@ public:
      */
     virtual status_t    startPreview() = 0;
 
+#ifdef USE_MAGURO_LIBCAMERA
     /**
      * Query the recording buffer information from HAL.
      * This is needed because the opencore expects the buffer
@@ -137,12 +138,20 @@ public:
      * Encode the YUV data.
      */
     virtual void        encodeData() = 0;
+#endif
 
     /**
      * Only used if overlays are used for camera preview.
      */
     virtual bool         useOverlay() {return false;}
     virtual status_t     setOverlay(const sp<Overlay> &overlay) {return BAD_VALUE;}
+
+#ifdef USE_GS2_LIBCAMERA
+    /**
+     * XXX Something in the binary blob but I don't know what it is to do.
+     */
+    virtual void        something() {}
+#endif
 
     /**
      * Stop a previously started preview.
@@ -226,10 +235,12 @@ public:
      */
     virtual status_t dump(int fd, const Vector<String16>& args) const = 0;
 
+#ifdef USE_MAGURO_LIBCAMERA
     /**
     * Take a LiveSnapshot - Picture while recording
     */
     virtual status_t    takeLiveSnapshot() = 0;
+#endif
 
 };
 
@@ -241,10 +252,15 @@ public:
  */
 extern "C" int HAL_getNumberOfCameras();
 extern "C" void HAL_getCameraInfo(int cameraId, struct CameraInfo* cameraInfo);
+#ifdef USE_MAGURO_LIBCAMERA
 /* HAL should return NULL if it fails to open camera hardware. */
 extern "C" sp<CameraHardwareInterface> HAL_openCameraHardware(int cameraId, int mode);
 /* Returns whether the camera is in 3D mode or not */
 extern "C" int HAL_isIn3DMode();
+#else
+/* HAL should return NULL if it fails to open camera hardware. */
+extern "C" sp<CameraHardwareInterface> HAL_openCameraHardware(int cameraId);
+#endif
 
 };  // namespace android
 
