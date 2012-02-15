@@ -183,7 +183,6 @@ LOCAL_SHARED_LIBRARIES := \
 	libskiagl \
 	libskia \
 	libsqlite \
-	libdvm \
 	libEGL \
 	libGLESv1_CM \
 	libGLESv2 \
